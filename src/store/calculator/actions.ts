@@ -37,7 +37,7 @@ export function initializeCalculator() {
           toAccountId: toAccount.id
         }
       })
-      // setInterval(() => dispatch(loadRates()), 5000);
+      setInterval(() => dispatch(loadRates()), 10000);
     } catch (error) {
       console.log('ERROR', error)
       dispatch({
