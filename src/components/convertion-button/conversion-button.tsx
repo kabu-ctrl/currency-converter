@@ -12,8 +12,8 @@ interface ConversionButtonProps {
 export const ConversionButton = ({ performExchange, isValidAmount }: ConversionButtonProps) => {
   return (
     <Button
-      size={'medium'}
-      color={'pink'}
+      size='medium'
+      color='pink'
       disabled={!isValidAmount}
       onClick={performExchange}
     >
