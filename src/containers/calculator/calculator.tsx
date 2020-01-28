@@ -5,7 +5,7 @@ import SelectCurrency from '../../components/currency-selector'
 import ConversionRatePanel from '../../components/conversion-rate-panel'
 import { getSelectedAccountIds, isCalculatorLoading } from '../../store/calculator/selectors'
 import { initializeCalculator, swapPockets } from '../../store/calculator/actions'
-import ConversionButton from '../../components/conversation-button'
+import ConversionButton from '../../components/convertion-button'
 import css from './styles.module.css'
 
 interface CalculatorPanelProps {
