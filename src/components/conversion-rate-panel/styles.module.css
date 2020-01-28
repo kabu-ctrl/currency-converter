@@ -1,0 +1,6 @@
+.rate {
+    position: absolute;
+    transform: translateY(-50%);
+    left: 20%;
+    min-width: 30%;
+}

@@ -1,0 +1,22 @@
+.content {
+    min-width: 400px;
+    width: 50%;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 7px;
+    box-shadow: 1px 1px 4px rgba(0,0,0,0.2);
+    min-height: 250px
+}
+
+.centerContainer {
+    position: relative;
+    border-bottom: solid 1px #a5a7a9;
+    margin: 25px 0;
+}
+
+.swapButton {
+    position: absolute;
+    transform: translateY(-50%) translateX(-50%);
+    left: 2%;
+}
