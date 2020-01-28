@@ -17,6 +17,7 @@ import {
 } from './selectors'
 import { fetchAllAccounts, updateAccountBalance } from '../../api/acounts'
 import { formatAmount } from '../../helpers/formatters'
+import { RATE_POLL_INTERVAL_MILLIS } from '../../config'
 
 export function initializeCalculator() {
   return async (dispatch: any) => {
@@ -37,7 +38,9 @@ export function initializeCalculator() {
           toAccountId: toAccount.id
         }
       })
-      setInterval(() => dispatch(loadRates()), 10000);
+
+      setInterval(() => dispatch(loadRates()), RATE_POLL_INTERVAL_MILLIS)
+
     } catch (error) {
       console.log('ERROR', error)
       dispatch({
