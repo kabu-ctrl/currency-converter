@@ -22,7 +22,7 @@ export function initializeCalculator() {
   return async (dispatch: any) => {
     try {
       dispatch({ type: IS_CALCULATOR_LOADING })
-      const currencies = fetchCurrencies()
+      const currencies = await fetchCurrencies()
       const accounts = await fetchAllAccounts()
       const [fromAccount, toAccount] = accounts.slice(1)
       const { rates } = await fetchRates(fromAccount.currency)

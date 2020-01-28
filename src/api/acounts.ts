@@ -11,6 +11,10 @@ export const accounts = [
 
 saveToLocalStorage(accounts)
 
+// Although accounts are stored in localStorage, they should be retrieved via some service
+// in the future. So I operate with Promises already. This will allow to keep consumers
+// unchanged.
+
 export const fetchAllAccounts = () => {
   try {
     const accounts = fromLocalStorage()
