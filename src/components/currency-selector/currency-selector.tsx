@@ -10,7 +10,6 @@ import {
   getCurrencies
 } from '../../store/calculator/selectors'
 import { pocketCurrencyChanged, pocketAmountChanged } from '../../store/calculator/actions'
-import { toCurrencyOption } from '../../helpers/converters'
 import { isInputValid } from '../../helpers/validators'
 import { formatAmount } from '../../helpers/formatters'
 
@@ -43,6 +42,10 @@ class SelectCurrency extends React.Component<SelectCurrencyProps & InjectedProps
     }
   }
 
+  toCurrencyOption = ({ code, title }: Currency) => ({
+    key: code, value: code, text: title
+  })
+
   render () {
     const {
       currency,
@@ -57,7 +60,7 @@ class SelectCurrency extends React.Component<SelectCurrencyProps & InjectedProps
         <Grid.Row columns={2}>
           <Grid.Column>
             <Select
-              options={currencyList.map(toCurrencyOption)}
+              options={currencyList.map(this.toCurrencyOption)}
               value={currency.code}
               onChange={(_, { value }: any) => { this.onCurrencyChangeEvent(value) }}
             />
