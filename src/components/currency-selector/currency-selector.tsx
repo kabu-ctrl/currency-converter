@@ -64,23 +64,23 @@ class SelectCurrency extends React.Component<SelectCurrencyProps & InjectedProps
           </Grid.Column>
           <Grid.Column>
             <Input
-              placeholder="0"
-              type="number"
+              placeholder='0'
+              type='number'
               value={exchangeAmount}
               onChange={this.onExchangeAmountChangeEvent}
             />
           </Grid.Column>
           <Grid.Column>
             <label className={insufficientFunds ? css.error : ''}>
-              {`Balance: ${currency.symbol}${formatAmount(availableAmount, 2)}`}
+              Balance: {currency.symbol}{formatAmount(availableAmount, 2)}
             </label>
           </Grid.Column>
           <Grid.Column>
-            {insufficientFunds
-              ? <label className={insufficientFunds ? css.invalid : ''}>
-                {'Insufficient funds'}
+            {insufficientFunds &&
+              <label className={insufficientFunds ? css.invalid : ''}>
+                Insufficient funds
               </label>
-              : null}
+            }
           </Grid.Column>
         </Grid.Row>
       </Grid>
