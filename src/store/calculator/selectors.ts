@@ -65,3 +65,7 @@ export const getCurrencies = (state: any): Currency[] => {
 export const findCurrencyByCode = (state: any, currencyCode: string): Currency => {
   return getState(state)?.currencies?.find((currency: Currency) => currency.code === currencyCode)
 }
+
+export const isError = (state: any): boolean => {
+  return getState(state)?.isError
+}

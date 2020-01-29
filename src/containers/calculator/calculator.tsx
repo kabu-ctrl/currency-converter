@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Button, Grid, Header, Icon, Loader } from 'semantic-ui-react'
+import { Button, Grid, Header, Icon, Loader, Message } from 'semantic-ui-react'
 import SelectCurrency from '../../components/currency-selector'
 import ConversionRatePanel from '../../components/conversion-rate-panel'
-import { getSelectedAccountIds, isCalculatorLoading } from '../../store/calculator/selectors'
+import { getSelectedAccountIds, isCalculatorLoading, isError } from '../../store/calculator/selectors'
 import { initializeCalculator, swapPockets } from '../../store/calculator/actions'
 import ConversionButton from '../../components/convertion-button'
 import css from './styles.module.css'
@@ -14,6 +14,7 @@ interface CalculatorPanelProps {
   initializeCalculator: () => void
   isLoading: boolean
   swapPockets: () => void
+  isError: boolean
 }
 
 class Calculator extends React.Component <CalculatorPanelProps> {
@@ -22,11 +23,18 @@ class Calculator extends React.Component <CalculatorPanelProps> {
   }
 
   render () {
+    if (this.props.isError) {
+      return (
+        <div>
+          <Message color='red'>
+            We are sorry, there was an error while loading calculator. Please, try again later.
+          </Message>
+        </div>
+      )
+    }
     if (this.props.isLoading) {
       return (
-        <div className={css.content}>
-          <Loader/>
-        </div>
+        <Loader active size='big'/>
       )
     }
 
@@ -69,7 +77,6 @@ class Calculator extends React.Component <CalculatorPanelProps> {
             </Grid.Column>
           </Grid.Row>
         </Grid>
-
       </div>
     )
   }
@@ -80,7 +87,8 @@ function mapStateToProps (state: any) {
   return {
     fromAccountId,
     toAccountId,
-    isLoading: isCalculatorLoading(state)
+    isLoading: isCalculatorLoading(state),
+    isError: isError(state)
   }
 }
 

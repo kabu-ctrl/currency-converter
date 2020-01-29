@@ -19,6 +19,7 @@ export interface CalculatorState {
   isCalculatorLoading: boolean
   isRatesLoading: boolean
   errorMessage?: string
+  isError: boolean
 }
 
 const initialState: CalculatorState = {
@@ -31,7 +32,8 @@ const initialState: CalculatorState = {
   accounts: [],
   isCalculatorLoading: true,
   isRatesLoading: true,
-  errorMessage: undefined
+  errorMessage: undefined,
+  isError: false
 }
 
 export default function (state = initialState, action: any): any {
@@ -78,6 +80,7 @@ export default function (state = initialState, action: any): any {
       return {
         ...state,
         isCalculatorLoading: false,
+        isError: true,
         errorMessage
       }
     }
