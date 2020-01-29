@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { Icon, Label, Loader } from 'semantic-ui-react'
 import { getCalculatorCurrencies, getExchangeRate, isRatesLoading } from '../../store/calculator/selectors'
 import { formatAmount } from '../../helpers/formatters'
+import { withPolling } from './with-polling';
+import { loadRates } from '../../store/calculator/actions';
 import css from './styles.module.css'
 
 interface InjectedProps {
@@ -12,7 +14,7 @@ interface InjectedProps {
   exchangeRate: number
 }
 
-interface ConversionRatePanelProps {
+export interface ConversionRatePanelProps {
   fromAccountId: string
   toAccountId: string
 }
@@ -47,4 +49,6 @@ function mapStateToProps (state: any) {
   }
 }
 
-export default connect(mapStateToProps, {})(ConversionRatePanel)
+export default withPolling(loadRates)(
+  connect(mapStateToProps, {})(ConversionRatePanel));
+
