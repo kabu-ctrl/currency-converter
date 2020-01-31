@@ -3,22 +3,20 @@ export function pageDriver(page: any) {
   const waitAndEvalElement = async (selector : string) => {
     await page.waitForSelector(selector)
     return page.$eval(selector, ({value, innerHTML, disabled, placeHolder}: any) =>
-      ({value, innerHTML, disabled, placeHolder}))
+      ({ value, innerHTML, disabled, placeHolder }))
   }
 
   const waitAndEvalInnerHtml = async (selector : string) => {
-    await page.waitForSelector(selector)
-    return page.$eval(selector, (e: any) => e.innerHTML)
+    const { innerHTML } = await waitAndEvalElement(selector)
+    return innerHTML
   }
 
   const getVisibleField = (selector: string) => {
-    return page.waitForSelector(selector, {visible: true})
+    return page.waitForSelector(selector, { visible: true })
   }
 
   const getButton = async (selector: string) => {
-    await page.waitForSelector(selector)
-    const {disabled, innerHTML} = await page.$eval(selector,
-      ({disabled, innerHTML}: any) => ({disabled, innerHTML}))
+    const { disabled, innerHTML } = await waitAndEvalElement(selector)
     return {
       disabled,
       label: innerHTML
