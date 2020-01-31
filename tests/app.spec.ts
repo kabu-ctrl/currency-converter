@@ -1,5 +1,5 @@
 import puppeteer from 'puppeteer'
-import { pageDriver } from './drivers';
+import { pageDriver } from './drivers'
 
 describe('Calculator', () => {
 
@@ -88,14 +88,70 @@ describe('Calculator', () => {
     })
 
     it('should calculate exchanged amount after entering primary amount', async () => {
-      await drv.enterInputAmount(true, '50')
+      await drv.enterInputAmount('50')
       expect(await drv.getSecondaryInputValue()).not.toBe('')
     })
 
     it('should enable exchange button if correct exchange amount is entered', async () => {
-      await drv.enterInputAmount(true, '50')
+      await drv.enterInputAmount('50')
       const button = await drv.getExchangeButton()
       expect(button.disabled).toBeFalsy()
+    })
+
+    it('should make conversion and reset input fields, when exchange button clicked', async () => {
+      await drv.enterInputAmount('50')
+      await drv.clickExchangeButton()
+
+      expect(await drv.getPrimaryInputValue()).toBe('')
+      expect(await drv.getSecondaryInputValue()).toBe('')
+
+      const button = await drv.getExchangeButton()
+      expect(button.disabled).toBeTruthy()
+    })
+
+    it('should disable button and show insufficient funds, when trying to exchange too big amount', async () => {
+      await drv.enterInputAmount('10000')
+      const button = await drv.getExchangeButton()
+
+      expect(button.disabled).toBeTruthy()
+      expect(await drv.getInsufficientFundsLabel()).toBe('Insufficient funds')
+    })
+  })
+
+  describe('Currency swap flow', () => {
+    it('should swap currencies and balances when clicking buttons', async () => {
+      const primaryBalance = await drv.getPrimaryBalance()
+      const secondaryBalance = await drv.getSecondaryBalance()
+      const primaryCurrency = await drv.getPrimaryCurrency()
+      const secondaryCurrency = await drv.getSecondaryCurrency()
+
+      await drv.clickSwapButton()
+
+      expect(await drv.getPrimaryBalance()).toBe(secondaryBalance)
+      expect(await drv.getSecondaryBalance()).toBe(primaryBalance)
+      expect(await drv.getPrimaryCurrency()).toBe(secondaryCurrency)
+      expect(await drv.getSecondaryCurrency()).toBe(primaryCurrency)
+    })
+
+    it('should swap currencies and balances when selecting primary currency same as the secondary', async () => {
+      const SECOND_OPTION_IDX = 1
+      const primaryCurrency = await drv.getPrimaryCurrency()
+      const secondaryCurrency = await drv.getSecondaryCurrency()
+
+      await drv.selectCurrency(SECOND_OPTION_IDX)
+
+      expect(await drv.getPrimaryCurrency()).toBe(secondaryCurrency)
+      expect(await drv.getSecondaryCurrency()).toBe(primaryCurrency)
+    })
+
+    it('should swap input values when swapping currencies', async () => {
+      await drv.enterInputAmount('50')
+      const secondaryAmount = await drv.getSecondaryInputValue()
+
+      await drv.clickSwapButton()
+
+      expect(await drv.getSecondaryInputValue()).toBe('50')
+      expect(await drv.getPrimaryInputValue()).toBe(secondaryAmount)
     })
   })
 })
