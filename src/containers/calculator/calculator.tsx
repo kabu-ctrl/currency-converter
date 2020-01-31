@@ -45,7 +45,7 @@ class Calculator extends React.Component <CalculatorPanelProps> {
         <Grid>
           <Grid.Row columns={1}>
             <Grid.Column>
-              <Header as='h1'>Currency Exchange</Header>
+              <Header data-testid={'header'} as='h1'>Currency Exchange</Header>
             </Grid.Column>
           </Grid.Row>
           <Grid.Row columns={1}>
@@ -56,7 +56,14 @@ class Calculator extends React.Component <CalculatorPanelProps> {
           <Grid.Row columns={1}>
             <Grid.Column>
               <div className={css.centerContainer}>
-                <Button size='small' icon onClick={swapPockets} className={css.swapButton} circular>
+                <Button
+                  data-testid='swap-button'
+                  size='small'
+                  icon
+                  onClick={swapPockets}
+                  className={css.swapButton}
+                  circular
+                >
                   <Icon rotated='clockwise' name='exchange'/>
                 </Button>
                 <ConversionRatePanel

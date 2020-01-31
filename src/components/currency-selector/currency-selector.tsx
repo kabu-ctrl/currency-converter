@@ -52,15 +52,16 @@ class SelectCurrency extends React.Component<SelectCurrencyProps & InjectedProps
       availableAmount,
       exchangeAmount,
       currencyList,
-      insufficientFunds
+      insufficientFunds,
+      primary,
     } = this.props
 
     return (
       <Grid divided='vertically'>
         <Grid.Row columns={2}>
           <Grid.Column>
-            <Select
-              options={currencyList.map(this.toCurrencyOption)}
+            <Select options={currencyList.map(this.toCurrencyOption)}
+              data-testid={`${primary ? 'primary': 'secondary'}-selector`}
               value={currency.code}
               onChange={(_, { value }: any) => { this.onCurrencyChangeEvent(value) }}
             />
@@ -70,17 +71,21 @@ class SelectCurrency extends React.Component<SelectCurrencyProps & InjectedProps
               placeholder='0'
               type='number'
               value={exchangeAmount}
+              data-testid={`${primary ? 'primary': 'secondary'}-input`}
               onChange={this.onExchangeAmountChangeEvent}
             />
           </Grid.Column>
           <Grid.Column>
-            <label className={insufficientFunds ? css.error : ''}>
+            <label
+              className={insufficientFunds ? css.error : ''}
+              data-testid={`${primary ? 'primary': 'secondary'}-balance`}
+            >
               Balance: {currency.symbol}{formatAmount(availableAmount, 2)}
             </label>
           </Grid.Column>
           <Grid.Column>
             {insufficientFunds &&
-              <label className={insufficientFunds ? css.invalid : ''}>
+              <label data-testid='insufficient-funds' className={insufficientFunds ? css.invalid : ''}>
                 Insufficient funds
               </label>
             }

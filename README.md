@@ -8,4 +8,8 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ### `yarn test`
 
-Runs application tests.
+Runs application unit tests.
+
+### `yarn integration`
+
+Runs application e2e tests.

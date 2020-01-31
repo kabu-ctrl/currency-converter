@@ -1,7 +1,5 @@
 module.exports = {
-  roots: [
-    '<rootDir>/src'
-  ],
+  preset: 'jest-puppeteer',
   transform: {
     '^.+\\.tsx?$': 'ts-jest'
   },

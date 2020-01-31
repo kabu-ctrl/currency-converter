@@ -32,7 +32,7 @@ class ConversionRatePanel extends React.Component <ConversionRatePanelProps & In
     const { fromCurrency, toCurrency, exchangeRate } = this.props
 
     return (
-      <Label color='blue' className={css.rate}>
+      <Label data-testid='rate-panel' color='blue' className={css.rate}>
         <Icon name='currency'/> 1 {fromCurrency} = {formatAmount(exchangeRate, 4)} {toCurrency}
       </Label>
     )

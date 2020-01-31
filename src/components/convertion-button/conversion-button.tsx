@@ -14,6 +14,7 @@ export const ConversionButton = ({ performExchange, isValidAmount }: ConversionB
     <Button
       size='medium'
       color='pink'
+      data-testid='exchange-button'
       disabled={!isValidAmount}
       onClick={performExchange}
     >
