@@ -1,54 +1,38 @@
 import React from 'react'
-import { connect } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Icon, Label, Loader } from 'semantic-ui-react'
-import { getCalculatorCurrencies, getExchangeRate, isRatesLoading } from '../../store/calculator/selectors'
+import {
+  getCalculatorCurrencies, getExchangeRate,
+  isRatesLoading
+} from '../../store/calculator/selectors'
 import { formatAmount } from '../../helpers/formatters'
 import { withPolling } from './with-polling';
 import { loadRates } from '../../store/calculator/actions';
 import css from './styles.module.css'
-
-interface InjectedProps {
-  isRatesLoading: boolean
-  fromCurrency?: string
-  toCurrency?: string
-  exchangeRate: number
-}
 
 export interface ConversionRatePanelProps {
   fromAccountId: string
   toAccountId: string
 }
 
-class ConversionRatePanel extends React.Component <ConversionRatePanelProps & InjectedProps> {
-  render () {
-    if (this.props.isRatesLoading) {
-      return (
-        <Label color='blue' className={css.rate}>
-          <Loader active inline />
-        </Label>
-      )
-    }
-
-    const { fromCurrency, toCurrency, exchangeRate } = this.props
-
+const ConversionRatePanel = () => {
+  const isLoading = useSelector(isRatesLoading)
+  const { fromCurrency, toCurrency } = useSelector(getCalculatorCurrencies)
+  const exchangeRate = useSelector(getExchangeRate(toCurrency))
+  if (isLoading) {
     return (
-      <Label data-testid='rate-panel' color='blue' className={css.rate}>
-        <Icon name='currency'/> 1 {fromCurrency} = {formatAmount(exchangeRate, 4)} {toCurrency}
+      <Label color='blue' className={css.rate}>
+        <Loader active inline />
       </Label>
     )
   }
+
+  return (
+    <Label data-testid='rate-panel' color='blue' className={css.rate}>
+      <Icon name='currency'/> 1 {fromCurrency} = {formatAmount(exchangeRate, 4)} {toCurrency}
+    </Label>
+  )
 }
 
-function mapStateToProps (state: any) {
-  const { fromCurrency, toCurrency } = getCalculatorCurrencies(state)
-  return {
-    fromCurrency,
-    toCurrency,
-    exchangeRate: getExchangeRate(state, toCurrency),
-    isRatesLoading: isRatesLoading(state)
-  }
-}
-
-export default withPolling(loadRates)(
-  connect(mapStateToProps, {})(ConversionRatePanel));
+export default withPolling(loadRates)(ConversionRatePanel);
 

@@ -54,7 +54,7 @@ export const pocketAmountChanged = (pocketId: string, enteredValue: string) => {
     const amount = parseFloat(enteredValue)
     const { fromAccountId, toAccountId } = getSelectedAccountIds(getState())
     const { toCurrency } = getCalculatorCurrencies(getState())
-    const rate = getExchangeRate(getState(), toCurrency)
+    const rate = getExchangeRate(toCurrency)(getState())
     const newAmountFrom = pocketId === fromAccountId ? enteredValue : formatAmount(amount / rate, 2)
     const newAmountTo = pocketId === toAccountId ? enteredValue : formatAmount(amount * rate, 2)
 
