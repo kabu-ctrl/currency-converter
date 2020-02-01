@@ -39,7 +39,7 @@ const Calculator = () => {
       <Grid>
         <Grid.Row columns={1}>
           <Grid.Column>
-            <Header data-testid={'header'} as='h1'>Currency Exchange</Header>
+            <Header data-testid='header' as='h1'>Currency Exchange</Header>
           </Grid.Column>
         </Grid.Row>
         <Grid.Row columns={1}>
