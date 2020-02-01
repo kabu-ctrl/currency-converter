@@ -60,10 +60,7 @@ const Calculator = () => {
               >
                 <Icon rotated='clockwise' name='exchange'/>
               </Button>
-              <ConversionRatePanel
-                fromAccountId={fromAccountId}
-                toAccountId={toAccountId}
-              />
+              <ConversionRatePanel/>
             </div>
           </Grid.Column>
         </Grid.Row>
