@@ -1,5 +1,5 @@
 import React from 'react'
-import { useDispatch, useSelector} from 'react-redux'
+import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { Grid, Input, Select } from 'semantic-ui-react'
 import { Currency } from '../../types/typings'
 import css from './styles.module.css'
@@ -30,12 +30,12 @@ const onExchangeAmountChangeEvent = (accountId: string, dispatch: any) => (e: an
 
 const CurrencySelector = ({accountId, primary}: CurrencySelectorProps) => {
 
-  const { balance, currency: currencyCode } = useSelector(findAccountById(accountId))
-  const { amountFrom, amountTo } = useSelector(getCalculatorAmounts)
-  const currencyList = useSelector(getCurrencies)
+  const { balance, currency: currencyCode } = useSelector(findAccountById(accountId), shallowEqual)
+  const { amountFrom, amountTo } = useSelector(getCalculatorAmounts, shallowEqual)
+  const currencyList = useSelector(getCurrencies, shallowEqual)
   const exchangeAmount = primary ? amountFrom : amountTo
   const insufficientFunds = primary && exchangeAmount > balance
-  const currency = useSelector(findCurrencyByCode(currencyCode))
+  const currency = useSelector(findCurrencyByCode(currencyCode), shallowEqual)
   const dispatch = useDispatch()
 
   return (

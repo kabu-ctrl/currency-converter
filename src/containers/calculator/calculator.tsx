@@ -5,7 +5,7 @@ import CurrencySelector from '../../components/currency-selector'
 import ConversionRatePanel from '../../components/conversion-rate-panel'
 import { getSelectedAccountIds, isCalculatorLoading, isError } from '../../store/calculator/selectors'
 import { initializeCalculator, swapPockets } from '../../store/calculator/actions'
-import ConversionButton from '../../components/convertion-button'
+import ExchangeButton from '../../components/exchange-button'
 import css from './styles.module.css'
 
 const Calculator = () => {
@@ -74,7 +74,7 @@ const Calculator = () => {
         </Grid.Row>
         <Grid.Row columns={1}>
           <Grid.Column>
-            <ConversionButton/>
+            <ExchangeButton/>
           </Grid.Column>
         </Grid.Row>
       </Grid>

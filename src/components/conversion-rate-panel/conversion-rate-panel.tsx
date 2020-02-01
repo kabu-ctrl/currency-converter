@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { shallowEqual, useSelector } from 'react-redux'
 import { Icon, Label, Loader } from 'semantic-ui-react'
 import {
   getCalculatorCurrencies, getExchangeRate,
@@ -17,8 +17,8 @@ export interface ConversionRatePanelProps {
 
 const ConversionRatePanel = () => {
   const isLoading = useSelector(isRatesLoading)
-  const { fromCurrency, toCurrency } = useSelector(getCalculatorCurrencies)
-  const exchangeRate = useSelector(getExchangeRate(toCurrency))
+  const { fromCurrency, toCurrency } = useSelector(getCalculatorCurrencies, shallowEqual)
+  const exchangeRate = useSelector(getExchangeRate(toCurrency), shallowEqual)
   if (isLoading) {
     return (
       <Label color='blue' className={css.rate}>

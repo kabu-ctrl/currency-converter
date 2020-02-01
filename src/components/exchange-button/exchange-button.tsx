@@ -1,13 +1,13 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { Button } from 'semantic-ui-react'
 import { performExchange } from '../../store/calculator/actions'
 import { getCalculatorAmounts, getSelectedAccounts } from '../../store/calculator/selectors'
 
-const ConversionButton = () => {
+const ExchangeButton = () => {
 
-  const { fromAccount } = useSelector(getSelectedAccounts)
-  const { amountFrom } = useSelector(getCalculatorAmounts)
+  const { fromAccount } = useSelector(getSelectedAccounts, shallowEqual)
+  const { amountFrom } = useSelector(getCalculatorAmounts, shallowEqual)
   const isValidAmount = amountFrom > 0 && fromAccount.balance >= amountFrom
   const dispatch = useDispatch()
 
@@ -24,4 +24,4 @@ const ConversionButton = () => {
   )
 }
 
-export default ConversionButton
+export default ExchangeButton
