@@ -16,7 +16,7 @@ export interface ConversionRatePanelProps {
 }
 
 const ConversionRatePanel = () => {
-  const isLoading = useSelector(isRatesLoading)
+  const isLoading = useSelector(isRatesLoading, shallowEqual)
   const { fromCurrency, toCurrency } = useSelector(getCalculatorCurrencies, shallowEqual)
   const exchangeRate = useSelector(getExchangeRate(toCurrency), shallowEqual)
   if (isLoading) {
