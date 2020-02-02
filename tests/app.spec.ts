@@ -2,21 +2,20 @@ import puppeteer from 'puppeteer'
 import { pageDriver } from './drivers'
 
 describe('Calculator', () => {
-
   let browser: any, page: any, drv: any
 
   beforeAll(async () => {
     browser = await puppeteer.launch({
-      headless: false
+      headless: false,
     })
     page = await browser.newPage()
 
     page.emulate({
       viewport: {
         width: 800,
-        height: 600
+        height: 600,
       },
-      userAgent: ''
+      userAgent: '',
     })
 
     drv = pageDriver(page)
@@ -81,7 +80,7 @@ describe('Calculator', () => {
       })
     })
   })
-  
+
   describe('Currency exchange flow', () => {
     it('should be empty secondary amount input before calculation', async () => {
       expect(await drv.getSecondaryInputValue()).toBe('')

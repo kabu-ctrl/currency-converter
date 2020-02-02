@@ -1,6 +1,6 @@
 import { Currency, ExchangeAccount } from '../../types/typings'
 
-function getState (state: any): any {
+function getState(state: any): any {
   return state?.calculator
 }
 
@@ -11,15 +11,15 @@ export const findAccountById = (accountId: string) => (state: any): ExchangeAcco
 export const getSelectedAccounts = (state: any): any => {
   return {
     fromAccount: findAccountById(state.calculator.fromAccountId)(state),
-    toAccount: findAccountById(state.calculator.toAccountId)(state)
+    toAccount: findAccountById(state.calculator.toAccountId)(state),
   }
 }
 
 export const getCalculatorCurrencies = (state: any): any => {
   const { fromAccount, toAccount } = getSelectedAccounts(state)
   return {
-    fromCurrency:  fromAccount.currency,
-    toCurrency: toAccount.currency
+    fromCurrency: fromAccount.currency,
+    toCurrency: toAccount.currency,
   }
 }
 
@@ -35,14 +35,14 @@ export const getSelectedAccountIds = (state: any): any => {
   const { fromAccount, toAccount } = getSelectedAccounts(state)
   return {
     fromAccountId: fromAccount?.id,
-    toAccountId: toAccount?.id
+    toAccountId: toAccount?.id,
   }
 }
 
 export const getCalculatorAmounts = (state: any): any => {
   return {
     amountFrom: getState(state)?.amountFrom,
-    amountTo: getState(state)?.amountTo
+    amountTo: getState(state)?.amountTo,
   }
 }
 

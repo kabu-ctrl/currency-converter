@@ -4,9 +4,10 @@ import { Grid, Input, Select } from 'semantic-ui-react'
 import { Currency } from '../../types/typings'
 import css from './styles.module.css'
 import {
-  findAccountById, findCurrencyByCode,
+  findAccountById,
+  findCurrencyByCode,
   getCalculatorAmounts,
-  getCurrencies
+  getCurrencies,
 } from '../../store/calculator/selectors'
 import { pocketCurrencyChanged, pocketAmountChanged } from '../../store/calculator/actions'
 import { isInputValid } from '../../helpers/validators'
@@ -18,7 +19,9 @@ interface CurrencySelectorProps {
 }
 
 const toCurrencyOption = ({ code, title }: Currency) => ({
-  key: code, value: code, text: title
+  key: code,
+  value: code,
+  text: title,
 })
 
 const handleExchangeAmountChangeEvent = (accountId: string, dispatch: any) => (e: any) => {
@@ -32,8 +35,7 @@ const handleCurrencyChangeEvent = (accountId: string, dispatch: any) => (_: any,
   dispatch(pocketCurrencyChanged(accountId, value))
 }
 
-const CurrencySelector = ({accountId, primary}: CurrencySelectorProps) => {
-
+const CurrencySelector = ({ accountId, primary }: CurrencySelectorProps) => {
   const { balance, currency: currencyCode } = useSelector(findAccountById(accountId), shallowEqual)
   const { amountFrom, amountTo } = useSelector(getCalculatorAmounts, shallowEqual)
   const currencyList = useSelector(getCurrencies, shallowEqual)
@@ -43,39 +45,40 @@ const CurrencySelector = ({accountId, primary}: CurrencySelectorProps) => {
   const dispatch = useDispatch()
 
   return (
-    <Grid divided='vertically'>
+    <Grid divided="vertically">
       <Grid.Row columns={2}>
         <Grid.Column>
           <Select
             options={currencyList.map(toCurrencyOption)}
-            data-testid={`${primary ? 'primary': 'secondary'}-selector`}
+            data-testid={`${primary ? 'primary' : 'secondary'}-selector`}
             value={currency.code}
             onChange={handleCurrencyChangeEvent(accountId, dispatch)}
           />
         </Grid.Column>
         <Grid.Column>
           <Input
-            placeholder='0'
-            type='number'
+            placeholder="0"
+            type="number"
             value={exchangeAmount}
-            data-testid={`${primary ? 'primary': 'secondary'}-input`}
+            data-testid={`${primary ? 'primary' : 'secondary'}-input`}
             onChange={handleExchangeAmountChangeEvent(accountId, dispatch)}
           />
         </Grid.Column>
         <Grid.Column>
           <label
             className={insufficientFunds ? css.error : ''}
-            data-testid={`${primary ? 'primary': 'secondary'}-balance`}
+            data-testid={`${primary ? 'primary' : 'secondary'}-balance`}
           >
-            Balance: {currency.symbol}{formatAmount(balance, 2)}
+            Balance: {currency.symbol}
+            {formatAmount(balance, 2)}
           </label>
         </Grid.Column>
         <Grid.Column>
-          {insufficientFunds &&
-          <label data-testid='insufficient-funds' className={insufficientFunds ? css.invalid : ''}>
-            Insufficient funds
-          </label>
-          }
+          {insufficientFunds && (
+            <label data-testid="insufficient-funds" className={insufficientFunds ? css.invalid : ''}>
+              Insufficient funds
+            </label>
+          )}
         </Grid.Column>
       </Grid.Row>
     </Grid>

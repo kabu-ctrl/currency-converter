@@ -21,7 +21,7 @@ const Calculator = () => {
   if (error) {
     return (
       <div>
-        <Message color='red'>
+        <Message color="red">
           We are sorry, there was an error while loading calculator. Please, try again later.
         </Message>
       </div>
@@ -29,9 +29,7 @@ const Calculator = () => {
   }
 
   if (loading) {
-    return (
-      <Loader active size='big'/>
-    )
+    return <Loader active size="big" />
   }
 
   return (
@@ -39,39 +37,41 @@ const Calculator = () => {
       <Grid>
         <Grid.Row columns={1}>
           <Grid.Column>
-            <Header data-testid='header' as='h1'>Currency Exchange</Header>
+            <Header data-testid="header" as="h1">
+              Currency Exchange
+            </Header>
           </Grid.Column>
         </Grid.Row>
         <Grid.Row columns={1}>
           <Grid.Column>
-            <CurrencySelector primary accountId={fromAccountId}/>
+            <CurrencySelector primary accountId={fromAccountId} />
           </Grid.Column>
         </Grid.Row>
         <Grid.Row columns={1}>
           <Grid.Column>
             <div className={css.centerContainer}>
               <Button
-                data-testid='swap-button'
-                size='small'
+                data-testid="swap-button"
+                size="small"
                 icon
                 onClick={() => dispatch(swapPockets())}
                 className={css.swapButton}
                 circular
               >
-                <Icon rotated='clockwise' name='exchange'/>
+                <Icon rotated="clockwise" name="exchange" />
               </Button>
-              <ConversionRatePanel/>
+              <ConversionRatePanel />
             </div>
           </Grid.Column>
         </Grid.Row>
         <Grid.Row columns={1}>
           <Grid.Column>
-            <CurrencySelector primary={false} accountId={toAccountId}/>
+            <CurrencySelector primary={false} accountId={toAccountId} />
           </Grid.Column>
         </Grid.Row>
         <Grid.Row columns={1}>
           <Grid.Column>
-            <ExchangeButton/>
+            <ExchangeButton />
           </Grid.Column>
         </Grid.Row>
       </Grid>

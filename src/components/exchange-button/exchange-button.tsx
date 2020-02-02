@@ -5,7 +5,6 @@ import { performExchange } from '../../store/calculator/actions'
 import { getCalculatorAmounts, getSelectedAccounts } from '../../store/calculator/selectors'
 
 const ExchangeButton = () => {
-
   const { fromAccount } = useSelector(getSelectedAccounts, shallowEqual)
   const { amountFrom } = useSelector(getCalculatorAmounts, shallowEqual)
   const isValidAmount = amountFrom > 0 && fromAccount.balance >= amountFrom
@@ -13,9 +12,9 @@ const ExchangeButton = () => {
 
   return (
     <Button
-      size='medium'
-      color='pink'
-      data-testid='exchange-button'
+      size="medium"
+      color="pink"
+      data-testid="exchange-button"
       disabled={!isValidAmount}
       onClick={() => dispatch(performExchange())}
     >

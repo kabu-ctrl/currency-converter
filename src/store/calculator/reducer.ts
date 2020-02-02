@@ -1,10 +1,12 @@
 import {
   ACCOUNTS_UPDATED,
   CALCULATOR_ERROR,
-  INIT_CALCULATOR, IS_CALCULATOR_LOADING,
-  RATES_LOADED, RATES_LOADING,
+  INIT_CALCULATOR,
+  IS_CALCULATOR_LOADING,
+  RATES_LOADED,
+  RATES_LOADING,
   UPDATE_CALCULATOR_AMOUNTS,
-  UPDATE_CALCULATOR
+  UPDATE_CALCULATOR,
 } from '../action-types'
 import { Currency } from '../../types/typings'
 
@@ -33,15 +35,15 @@ const initialState: CalculatorState = {
   isCalculatorLoading: true,
   isRatesLoading: true,
   errorMessage: undefined,
-  isError: false
+  isError: false,
 }
 
-export default function (state = initialState, action: any): any {
+export default function(state = initialState, action: any): any {
   switch (action.type) {
     case IS_CALCULATOR_LOADING: {
       return {
         ...state,
-        isCalculatorLoading: true
+        isCalculatorLoading: true,
       }
     }
     case INIT_CALCULATOR: {
@@ -54,7 +56,7 @@ export default function (state = initialState, action: any): any {
         currencies,
         accounts,
         fromAccountId,
-        toAccountId
+        toAccountId,
       }
     }
     case UPDATE_CALCULATOR: {
@@ -64,7 +66,7 @@ export default function (state = initialState, action: any): any {
         fromAccountId,
         toAccountId,
         amountFrom,
-        amountTo
+        amountTo,
       }
     }
     case UPDATE_CALCULATOR_AMOUNTS: {
@@ -72,7 +74,7 @@ export default function (state = initialState, action: any): any {
       return {
         ...state,
         amountFrom,
-        amountTo
+        amountTo,
       }
     }
     case CALCULATOR_ERROR: {
@@ -81,13 +83,13 @@ export default function (state = initialState, action: any): any {
         ...state,
         isCalculatorLoading: false,
         isError: true,
-        errorMessage
+        errorMessage,
       }
     }
     case RATES_LOADING: {
       return {
         ...state,
-        isRatesLoading: true
+        isRatesLoading: true,
       }
     }
     case RATES_LOADED: {
@@ -95,7 +97,7 @@ export default function (state = initialState, action: any): any {
       return {
         ...state,
         rates,
-        isRatesLoading: false
+        isRatesLoading: false,
       }
     }
     case ACCOUNTS_UPDATED: {
@@ -104,7 +106,7 @@ export default function (state = initialState, action: any): any {
         ...state,
         accounts,
         amountFrom: '',
-        amountTo: ''
+        amountTo: '',
       }
     }
     default:

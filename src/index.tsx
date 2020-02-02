@@ -8,5 +8,5 @@ ReactDOM.render(
   <Provider store={store}>
     <Calculator />
   </Provider>,
-  document.getElementById('root')
+  document.getElementById('root'),
 )

@@ -6,14 +6,19 @@ import {
   RATES_LOADED,
   UPDATE_CALCULATOR_AMOUNTS,
   UPDATE_CALCULATOR,
-  IS_CALCULATOR_LOADING, ACCOUNTS_UPDATED
+  IS_CALCULATOR_LOADING,
+  ACCOUNTS_UPDATED,
 } from '../action-types'
 import { fetchRates } from '../../api/rates'
 import { fetchCurrencies } from '../../api/currencies'
 import {
-  findAccountByCurrency, getCalculatorAmounts,
-  getCalculatorCurrencies, getCalculatorRates, getExchangeRate,
-  getSelectedAccountIds, getSelectedAccounts
+  findAccountByCurrency,
+  getCalculatorAmounts,
+  getCalculatorCurrencies,
+  getCalculatorRates,
+  getExchangeRate,
+  getSelectedAccountIds,
+  getSelectedAccounts,
 } from './selectors'
 import { fetchAllAccounts, updateAccountBalance } from '../../api/acounts'
 import { formatAmount } from '../../helpers/formatters'
@@ -34,23 +39,23 @@ export function initializeCalculator() {
           currencies,
           accounts,
           fromAccountId: fromAccount.id,
-          toAccountId: toAccount.id
-        }
+          toAccountId: toAccount.id,
+        },
       })
     } catch (error) {
       console.log('ERROR', error)
       dispatch({
         type: CALCULATOR_ERROR,
         payload: {
-          errorMessage: 'Problem while loading calculator'
-        }
+          errorMessage: 'Problem while loading calculator',
+        },
       })
     }
   }
 }
 
 export const pocketAmountChanged = (pocketId: string, enteredValue: string) => {
-  return async (dispatch: Dispatch, getState: any) => {
+  return (dispatch: Dispatch, getState: any) => {
     const amount = parseFloat(enteredValue)
     const { fromAccountId, toAccountId } = getSelectedAccountIds(getState())
     const { toCurrency } = getCalculatorCurrencies(getState())
@@ -62,8 +67,8 @@ export const pocketAmountChanged = (pocketId: string, enteredValue: string) => {
       type: UPDATE_CALCULATOR_AMOUNTS,
       payload: {
         amountFrom: newAmountFrom,
-        amountTo: newAmountTo
-      }
+        amountTo: newAmountTo,
+      },
     })
   }
 }
@@ -78,15 +83,15 @@ export function loadRates() {
       dispatch({
         type: RATES_LOADED,
         payload: {
-          rates
-        }
+          rates,
+        },
       })
     }
   }
 }
 
 export function swapPockets() {
-  return async (dispatch: any, getState: any) => {
+  return (dispatch: any, getState: any) => {
     const { fromAccountId, toAccountId } = getSelectedAccountIds(getState())
     const { amountFrom, amountTo } = getCalculatorAmounts(getState())
     dispatch({
@@ -95,21 +100,21 @@ export function swapPockets() {
         fromAccountId: toAccountId,
         toAccountId: fromAccountId,
         amountFrom: amountTo,
-        amountTo: amountFrom
-      }
+        amountTo: amountFrom,
+      },
     })
     dispatch(loadRates())
   }
 }
 
-export function pocketCurrencyChanged (pocketId: string, currency: string) {
-  return async (dispatch: any, getState: any) => {
+export function pocketCurrencyChanged(pocketId: string, currency: string) {
+  return (dispatch: any, getState: any) => {
     const { id } = findAccountByCurrency(getState(), currency)
     const { fromAccountId, toAccountId } = getSelectedAccountIds(getState())
     const { amountFrom, amountTo } = getCalculatorAmounts(getState())
 
-    const newFromAccountId = pocketId === fromAccountId ? id : (id === fromAccountId ? toAccountId : fromAccountId)
-    const newToAccountId = pocketId === toAccountId ? id : (id === toAccountId ? fromAccountId : toAccountId)
+    const newFromAccountId = pocketId === fromAccountId ? id : id === fromAccountId ? toAccountId : fromAccountId
+    const newToAccountId = pocketId === toAccountId ? id : id === toAccountId ? fromAccountId : toAccountId
 
     if (id === toAccountId) {
       dispatch(swapPockets())
@@ -120,8 +125,8 @@ export function pocketCurrencyChanged (pocketId: string, currency: string) {
           fromAccountId: newFromAccountId,
           toAccountId: newToAccountId,
           amountFrom,
-          amountTo
-        }
+          amountTo,
+        },
       })
       dispatch(loadRates())
     }
@@ -142,8 +147,8 @@ export function performExchange() {
     dispatch({
       type: ACCOUNTS_UPDATED,
       payload: {
-        accounts: await fetchAllAccounts()
-      }
+        accounts: await fetchAllAccounts(),
+      },
     })
   }
 }

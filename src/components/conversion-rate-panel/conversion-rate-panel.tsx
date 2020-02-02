@@ -1,10 +1,7 @@
-import React, {useEffect} from 'react'
-import {shallowEqual, useDispatch, useSelector} from 'react-redux'
+import React, { useEffect } from 'react'
+import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { Icon, Label, Loader } from 'semantic-ui-react'
-import {
-  getCalculatorCurrencies, getExchangeRate,
-  isRatesLoading
-} from '../../store/calculator/selectors'
+import { getCalculatorCurrencies, getExchangeRate, isRatesLoading } from '../../store/calculator/selectors'
 import { formatAmount } from '../../helpers/formatters'
 import { loadRates } from '../../store/calculator/actions'
 import { RATE_POLL_INTERVAL_MILLIS } from '../../config'
@@ -27,18 +24,17 @@ const ConversionRatePanel = () => {
 
   if (isLoading) {
     return (
-      <Label color='blue' className={css.rate}>
+      <Label color="blue" className={css.rate}>
         <Loader active inline />
       </Label>
     )
   }
 
   return (
-    <Label data-testid='rate-panel' color='blue' className={css.rate}>
-      <Icon name='currency'/> 1 {fromCurrency} = {formatAmount(exchangeRate, 4)} {toCurrency}
+    <Label data-testid="rate-panel" color="blue" className={css.rate}>
+      <Icon name="currency" /> 1 {fromCurrency} = {formatAmount(exchangeRate, 4)} {toCurrency}
     </Label>
   )
 }
 
 export default ConversionRatePanel
-

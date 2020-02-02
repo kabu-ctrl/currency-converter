@@ -16,14 +16,17 @@ const selectors = {
 }
 
 export function pageDriver(page: any) {
-
-  const waitAndEvalElement = async (selector : string) => {
+  const waitAndEvalElement = async (selector: string) => {
     await page.waitForSelector(selector)
-    return page.$eval(selector, ({value, innerHTML, disabled, placeHolder}: any) =>
-      ({ value, innerHTML, disabled, placeHolder }))
+    return page.$eval(selector, ({ value, innerHTML, disabled, placeHolder }: any) => ({
+      value,
+      innerHTML,
+      disabled,
+      placeHolder,
+    }))
   }
 
-  const waitAndEvalInnerHtml = async (selector : string) => {
+  const waitAndEvalInnerHtml = async (selector: string) => {
     const { innerHTML } = await waitAndEvalElement(selector)
     return innerHTML
   }
@@ -36,7 +39,7 @@ export function pageDriver(page: any) {
     const { disabled, innerHTML } = await waitAndEvalElement(selector)
     return {
       disabled,
-      label: innerHTML
+      label: innerHTML,
     }
   }
 
@@ -60,14 +63,14 @@ export function pageDriver(page: any) {
       return getVisibleField(selectors.PRIMARY_INPUT)
     },
     getPrimaryInputValue: async () => {
-      const {value} = await waitAndEvalElement(selectors.PRIMARY_INPUT_VAL)
+      const { value } = await waitAndEvalElement(selectors.PRIMARY_INPUT_VAL)
       return value
     },
     getSecondaryInput: async () => {
       return getVisibleField(selectors.SECONDARY_INPUT)
     },
     getSecondaryInputValue: async () => {
-      const {value} = await waitAndEvalElement(selectors.SECONDARY_INPUT_VAL)
+      const { value } = await waitAndEvalElement(selectors.SECONDARY_INPUT_VAL)
       return value
     },
     getExchangeButton: async () => {
@@ -83,7 +86,7 @@ export function pageDriver(page: any) {
       const elem = await page.$$(selectors.INSUFFICIENT_FUNDS_LABEL)
       return elem && elem.length > 0 && waitAndEvalInnerHtml(selectors.INSUFFICIENT_FUNDS_LABEL)
     },
-    enterInputAmount: async (value: string, primary: boolean = true) => {
+    enterInputAmount: async (value: string, primary = true) => {
       const inputSelector = primary ? selectors.PRIMARY_INPUT_VAL : selectors.SECONDARY_INPUT_VAL
       await page.waitForSelector(inputSelector)
       await page.click(inputSelector)
@@ -95,7 +98,7 @@ export function pageDriver(page: any) {
     clickSwapButton: async () => {
       await page.click(selectors.SWAP_BUTTON)
     },
-    selectCurrency: async (optionIndex: number, primary: boolean = true) => {
+    selectCurrency: async (optionIndex: number, primary = true) => {
       const selector = primary ? selectors.PRIMARY_CURRENCY : selectors.SECONDARY_CURRENCY
       await page.click(selector)
       const options = await page.$$(selectors.CURRENCY_SELECT_OPTION)
