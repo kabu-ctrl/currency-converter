@@ -21,11 +21,15 @@ const toCurrencyOption = ({ code, title }: Currency) => ({
   key: code, value: code, text: title
 })
 
-const onExchangeAmountChangeEvent = (accountId: string, dispatch: any) => (e: any) => {
+const handleExchangeAmountChangeEvent = (accountId: string, dispatch: any) => (e: any) => {
   const input = e.target.value
-  if (input === '' || isInputValid(e.target.value)) {
+  if (input === '' || isInputValid(input)) {
     dispatch(pocketAmountChanged(accountId, input))
   }
+}
+
+const handleCurrencyChangeEvent = (accountId: string, dispatch: any) => (_: any, { value }: any) => {
+  dispatch(pocketCurrencyChanged(accountId, value))
 }
 
 const CurrencySelector = ({accountId, primary}: CurrencySelectorProps) => {
@@ -46,7 +50,7 @@ const CurrencySelector = ({accountId, primary}: CurrencySelectorProps) => {
             options={currencyList.map(toCurrencyOption)}
             data-testid={`${primary ? 'primary': 'secondary'}-selector`}
             value={currency.code}
-            onChange={(_, { value }: any) => dispatch(pocketCurrencyChanged(accountId, value))}
+            onChange={handleCurrencyChangeEvent(accountId, dispatch)}
           />
         </Grid.Column>
         <Grid.Column>
@@ -55,7 +59,7 @@ const CurrencySelector = ({accountId, primary}: CurrencySelectorProps) => {
             type='number'
             value={exchangeAmount}
             data-testid={`${primary ? 'primary': 'secondary'}-input`}
-            onChange={onExchangeAmountChangeEvent(accountId, dispatch)}
+            onChange={handleExchangeAmountChangeEvent(accountId, dispatch)}
           />
         </Grid.Column>
         <Grid.Column>
