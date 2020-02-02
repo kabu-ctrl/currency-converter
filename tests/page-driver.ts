@@ -15,7 +15,7 @@ const selectors = {
   CURRENCY_SELECT_OPTION: 'div [role="option"]',
 }
 
-export function pageDriver(page: any) {
+export default function pageDriver(page: any) {
   const waitAndEvalElement = async (selector: string) => {
     await page.waitForSelector(selector)
     return page.$eval(selector, ({ value, innerHTML, disabled, placeHolder }: any) => ({

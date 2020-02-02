@@ -1,5 +1,5 @@
 import puppeteer from 'puppeteer'
-import { pageDriver } from './drivers'
+import pageDriver from './page-driver'
 
 describe('Calculator', () => {
   let browser: any, page: any, drv: any
